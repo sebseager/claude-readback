@@ -41,7 +41,7 @@ export function App() {
   const subagentSessions = useMemo(() => Object.values(subagentMap), [subagentMap])
 
   return (
-    <TooltipProvider delayDuration={300}>
+    <TooltipProvider delayDuration={800}>
       <div className="flex h-dvh w-full overflow-hidden bg-main text-fg">
         <Sidebar />
         <div className="flex min-w-0 flex-1 flex-col">
