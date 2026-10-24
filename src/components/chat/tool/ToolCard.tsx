@@ -89,7 +89,7 @@ export const ToolCard = memo(function ToolCard({ block, fallbackLines }: Props) 
       )}
       {failure && (
         <div
-          className="mx-2 mb-2 truncate rounded-lg border border-danger/30 bg-danger/8 px-2.5 py-1.5 font-mono text-[12px] text-danger"
+          className="truncate rounded-b-[11px] border-t border-danger/25 bg-danger/8 px-3 py-1.5 font-mono text-[12px] text-danger"
           data-testid="tool-failure"
         >
           {highlightText(failure, query)}
