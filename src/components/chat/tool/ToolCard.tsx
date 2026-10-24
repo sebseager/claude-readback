@@ -2,14 +2,16 @@ import { ChevronRight } from 'lucide-react'
 import { createElement, memo } from 'react'
 import { elapsedMs, formatDuration } from '@/components/common/format'
 import { highlightText } from '@/components/common/highlight'
+import { bashOutput, toolResultText } from '@/lib/transcript/searchText'
 import type { ToolBlock } from '@/lib/transcript/types'
+import { stripAnsi } from '@/lib/transcript/util'
 import { cn } from '@/lib/utils'
 import { useActiveOccurrence, useExpanded, useSearchQuery } from '../chatStore'
 import { RawJsonButton } from '../RawJsonButton'
 import { useToolInputActive } from './partsActive'
 import { toolCardBody } from './toolCardBodyLoader'
 import { ToolStatusBadge } from './ToolStatusBadge'
-import { displayToolName, toolIcon, toolStatus } from './toolMeta'
+import { displayToolName, toolIcon, toolStatus, type ToolStatus } from './toolMeta'
 
 /** When the result fully restates the input (answers, new todo list), the Input section is skipped. */
 const RESULT_SUPERSEDES_INPUT = new Set(['AskUserQuestion', 'TodoWrite'])
@@ -39,6 +41,7 @@ export const ToolCard = memo(function ToolCard({ block, fallbackLines }: Props) 
   const name = displayToolName(block.name)
   const rawLines = toolRawLines(block, fallbackLines)
   const preview = open ? undefined : commandPreview(block)
+  const failure = open ? undefined : failurePreview(block, status)
   return (
     <div
       className={cn(
@@ -84,10 +87,42 @@ export const ToolCard = memo(function ToolCard({ block, fallbackLines }: Props) 
           {highlightText(preview, query)}
         </div>
       )}
+      {failure && (
+        <div
+          className="mx-2 mb-2 truncate rounded-lg border border-danger/30 bg-danger/8 px-2.5 py-1.5 font-mono text-[12px] text-danger"
+          data-testid="tool-failure"
+        >
+          {highlightText(failure, query)}
+        </div>
+      )}
       {open && <ToolCardBodySlot block={block} skipInput={!!skipInput} />}
     </div>
   )
 })
+
+const firstLine = (text: string | undefined): string | undefined => {
+  if (!text) return undefined
+  const line = stripAnsi(text)
+    .split('\n')
+    .map((l) => l.trim())
+    .find((l) => l.length > 0)
+  return line && line.length > 240 ? `${line.slice(0, 240)} …` : line
+}
+
+/** One line on why a failed call failed: the denial reason, else the first line of what the tool said. */
+function failurePreview(block: ToolBlock, status: ToolStatus): string | undefined {
+  const r = block.result
+  if (!r) return undefined
+  if (status === 'denied') return firstLine(r.denied) ?? 'Denied'
+  if (status !== 'error') return undefined
+  if (block.name === 'Bash') {
+    const { stdout, stderr, exitCode } = bashOutput(r)
+    const line = firstLine(stderr) ?? firstLine(stdout)
+    if (line) return exitCode !== undefined ? `exit ${exitCode} · ${line}` : line
+    if (exitCode !== undefined) return `exit ${exitCode}`
+  }
+  return firstLine(toolResultText(r)) ?? 'Error'
+}
 
 /**
  * First line of a shell command (Bash and friends) for the collapsed card, so the header's description
