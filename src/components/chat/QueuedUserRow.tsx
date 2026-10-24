@@ -28,7 +28,7 @@ export const QueuedUserRow = memo(function QueuedUserRow({ item }: { item: Queue
           className="border border-dashed border-border"
         />
       )}
-      <div className="absolute -bottom-5 right-1 flex h-5 items-center gap-1 text-[11px] text-fg-muted">
+      <div className="absolute -bottom-6 right-1 flex h-6 items-center pt-1 gap-1 text-[11px] text-fg-muted">
         <RawJsonButton lines={[item.recordLine]} title="Raw queued message" />
         <time
           dateTime={item.at}

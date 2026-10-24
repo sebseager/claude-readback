@@ -25,7 +25,7 @@ export const UserPromptRow = memo(function UserPromptRow({ turn }: { turn: Turn 
       {hasPromptBody(prompt.segments) && (
         <UserBubble segments={prompt.segments} rowId={turn.id} activeIndex={active} />
       )}
-      <div className="absolute -bottom-5 right-1 flex h-5 items-center gap-1 text-[11px] text-fg-muted">
+      <div className="absolute -bottom-6 right-1 flex h-6 items-center pt-1 gap-1 text-[11px] text-fg-muted">
         <RawJsonButton lines={turn.recordLines} uuid={prompt.recordUuid} title="Raw prompt record" />
         <time
           dateTime={turn.startedAt}
