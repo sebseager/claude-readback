@@ -4,11 +4,12 @@ Read [Claude Code](https://docs.anthropic.com/en/docs/claude-code) session trans
 Drop a session's `.jsonl` (and its subagents) into the page to see prompts, answers, tool calls with their
 results, subagents and usage stats, all searchable.
 
+There's a live version deployed at **[sebseager.github.io/claude-readback](https://sebseager.github.io/claude-readback/)**.
+
 ![A demo session open in Claude Readback: the sidebar lists sessions, a prompt with a pasted-text chip, the start of the response, and the stats panel](docs/screenshot.png)
 
-**Runs entirely in your browser. Nothing is uploaded.** Files are parsed in a Web Worker and kept in
-IndexedDB so the library survives reloads. No network requests, analytics or telemetry. Delete a session, or
-clear everything in Settings, and it is gone.
+It runs entirely in your browser, and nothing gets uploaded anywhere. Files are parsed in a Web Worker and 
+kept in IndexedDB so the library survives reloads. There's no server, network requests, analytics, or telemetry.
 
 ## Where transcripts live
 
