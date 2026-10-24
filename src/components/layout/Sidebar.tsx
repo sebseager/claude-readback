@@ -131,14 +131,6 @@ export function Sidebar() {
             collapsed ? 'flex-col items-center gap-1 py-2' : 'flex-col gap-1.5 px-3 py-2.5',
           )}
         >
-          {!collapsed && (
-            <p
-              className="truncate px-1 text-[11px] leading-snug text-fg-muted"
-              title="Runs entirely in your browser. Nothing is uploaded."
-            >
-              Runs in your browser · nothing uploaded
-            </p>
-          )}
           <div className={cn('flex items-center', collapsed ? 'flex-col gap-1' : 'justify-between')}>
             <IconButton
               label="Settings"
