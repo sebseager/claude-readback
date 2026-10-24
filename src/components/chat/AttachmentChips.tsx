@@ -14,6 +14,8 @@ type Props = {
   /** Row the prompt renders in; scopes search hits inside chips. */
   rowId?: string
   className?: string
+  /** Segment kinds rendered elsewhere (pasted blocks go inline in the bubble). */
+  omit?: readonly PromptSegment['kind'][]
 }
 
 /** Everything attached to a prompt that isn't prose: pasted blocks, images, documents, mentions, reminders. */
@@ -22,10 +24,13 @@ export const AttachmentChips = memo(function AttachmentChips({
   mentions,
   rowId,
   className,
+  omit,
 }: Props) {
   const images = segments.filter((s) => s.kind === 'image')
   // Keep each segment's index: search block ids (`sr:<i>`) are positions in `segments`.
-  const others = segments.flatMap((s, i) => (s.kind !== 'text' && s.kind !== 'image' ? [{ s, i }] : []))
+  const others = segments.flatMap((s, i) =>
+    s.kind !== 'text' && s.kind !== 'image' && !omit?.includes(s.kind) ? [{ s, i }] : [],
+  )
   if (images.length === 0 && others.length === 0 && mentions.length === 0) return null
   return (
     <div className={cn('flex max-w-[80%] flex-col items-end gap-1.5', className)}>

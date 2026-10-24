@@ -12,16 +12,21 @@ type Props = {
   index: number
   lines: number
   text: string
+  className?: string
 }
 
 /** "Pasted text #1 · +60 lines" chip; opens the pasted block in a dialog with Copy. */
-export const PastedTextChip = memo(function PastedTextChip({ rowId, index, lines, text }: Props) {
+export const PastedTextChip = memo(function PastedTextChip({ rowId, index, lines, text, className }: Props) {
   const [open, setOpen] = useState(false)
   // Hits inside the pasted block mark the chip (the text itself lives in the dialog).
   const search = useChipSearch(text, rowId, `pasted:${index}`, 'pasted')
   return (
     <>
-      <button type="button" className={cn(CHIP, chipSearchClass(search))} onClick={() => setOpen(true)}>
+      <button
+        type="button"
+        className={cn(CHIP, chipSearchClass(search), className)}
+        onClick={() => setOpen(true)}
+      >
         <FileText />
         <span className="truncate">
           Pasted text #{index} <span className="text-fg-muted">· +{lines} lines</span>

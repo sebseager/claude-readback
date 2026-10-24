@@ -299,7 +299,7 @@ describe('Edit tool card', () => {
 })
 
 describe('pasted-only prompts', () => {
-  it('render the chip without an empty bubble', () => {
+  it('render the chip inside the bubble', () => {
     const turn = {
       ...session.turns.find((t) => t.kind === 'human')!,
       id: 'turn-pasted-only',
@@ -311,7 +311,36 @@ describe('pasted-only prompts', () => {
       },
     }
     renderInChat(<UserPromptRow turn={turn} />, session)
-    expect(screen.getByRole('button', { name: /Pasted text #9/ })).toBeInTheDocument()
-    expect(screen.getByTestId('user-prompt').querySelector('.bg-bubble')).toBeNull()
+    const bubble = screen.getByTestId('user-prompt').querySelector('.bg-bubble')!
+    expect(within(bubble as HTMLElement).getByRole('button', { name: /Pasted text #9/ })).toBeInTheDocument()
+  })
+})
+
+describe('inline pasted chips', () => {
+  it('sit in the bubble where the text was pasted, with other attachments above', () => {
+    const turn = {
+      ...session.turns.find((t) => t.kind === 'human')!,
+      id: 'turn-inline',
+      prompt: {
+        segments: [
+          { kind: 'text' as const, text: 'Compare these:\n\n\n' },
+          { kind: 'pasted' as const, id: 'a1', index: 1, lines: 1, text: 'x\ny' },
+          { kind: 'text' as const, text: '\nand\n' },
+          { kind: 'pasted' as const, id: 'b2', index: 2, lines: 0, text: 'z' },
+          { kind: 'system-reminder' as const, text: 'reminder body' },
+        ],
+        mentions: [],
+        rawText: '',
+        recordUuid: 'u-inline',
+      },
+    }
+    renderInChat(<UserPromptRow turn={turn} />, session)
+    const row = screen.getByTestId('user-prompt')
+    const bubble = row.querySelector('.bg-bubble') as HTMLElement
+    expect(bubble.textContent).toBe(
+      'Compare these:\nPasted text #1 · +1 lines\nand\nPasted text #2 · +0 lines',
+    )
+    const reminder = screen.getByRole('button', { name: /system reminder/ })
+    expect(bubble.contains(reminder)).toBe(false)
   })
 })

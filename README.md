@@ -33,7 +33,8 @@ clear everything in Settings, and it is gone.
 
 ## What it shows
 
-Prompts with pastes, images, `@`-files and system reminders as chips; markdown responses with copyable code and
+Prompts with pasted text as chips inline where it was pasted, and images, `@`-files and system reminders as
+chips above; markdown responses with copyable code and
 thinking durations; tool calls as cards with per-tool views (terminal output, diffs, files, search results,
 questions, todos) plus errors, denials and hook output; subagent transcripts nested inline; queued messages,
 slash commands, compaction summaries, interrupts, API errors and other system events; hidden context behind a
