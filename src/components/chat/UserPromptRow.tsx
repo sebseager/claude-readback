@@ -19,7 +19,7 @@ export const UserPromptRow = memo(function UserPromptRow({ turn }: { turn: Turn 
       {prompt.queued && <QueuedBadge />}
       <AttachmentChips segments={prompt.segments} mentions={prompt.mentions} rowId={turn.id} />
       {text && <UserBubble text={text} activeIndex={active} />}
-      <div className="absolute -bottom-4 right-1 flex h-5 items-center gap-1 text-[11px] text-fg-muted">
+      <div className="absolute -bottom-5 right-1 flex h-5 items-center gap-1 text-[11px] text-fg-muted">
         <RawJsonButton lines={turn.recordLines} uuid={prompt.recordUuid} title="Raw prompt record" />
         <time
           dateTime={turn.startedAt}

@@ -18,7 +18,7 @@ export const QueuedUserRow = memo(function QueuedUserRow({ item }: { item: Queue
       <QueuedBadge />
       {item.segments && <AttachmentChips segments={item.segments} mentions={[]} rowId={item.id} />}
       {text && <UserBubble text={text} activeIndex={active} className="border border-dashed border-border" />}
-      <div className="absolute -bottom-4 right-1 flex h-5 items-center gap-1 text-[11px] text-fg-muted">
+      <div className="absolute -bottom-5 right-1 flex h-5 items-center gap-1 text-[11px] text-fg-muted">
         <RawJsonButton lines={[item.recordLine]} title="Raw queued message" />
         <time
           dateTime={item.at}
