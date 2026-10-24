@@ -14,7 +14,11 @@ import type { RawRecord, Session, SubagentRef } from '@/lib/transcript/types'
 import { cn } from '@/lib/utils'
 import { ChatContext, createRawLookup, type ChatContextValue } from './chatContext'
 import { useChatStore } from './chatStore'
-import { buildRows, estimateRowSize, rowPadding } from './rows'
+import { buildRows, type ChatRow, estimateRowSize, rowPadding } from './rows'
+
+/** Rows whose footer (raw action, time) hangs below their box. */
+const hasFooter = (row: ChatRow) =>
+  row.kind === 'prompt' || (row.kind === 'item' && row.item.kind === 'queued-user')
 import { RowRenderer } from './RowRenderer'
 import { useChatScrollElement } from './scrollContext'
 
@@ -146,7 +150,13 @@ export function MessageList({
               data-row-id={row.id}
               data-row-kind={row.kind}
               ref={virtualizer.measureElement}
-              className={cn('absolute top-0 left-0 w-full', rowPadding(rows, v.index))}
+              className={cn(
+                'absolute top-0 left-0 w-full',
+                rowPadding(rows, v.index),
+                // Prompt rows hang a footer into the gap below; the transform makes each wrapper its own
+                // stacking context, so lift these above the next row or it swallows the clicks.
+                hasFooter(row) && 'z-10',
+              )}
               style={{ transform: `translateY(${v.start - scrollMargin}px)` }}
             >
               <RowRenderer row={row} />
