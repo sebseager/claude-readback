@@ -90,8 +90,8 @@ export function buildRows(session: Session): RowModel {
 }
 
 /**
- * Small centred pills (events, the context-items toggle, slash commands, interrupt and rewind markers).
- * Consecutive ones stack tightly in one centred column.
+ * Small centered pills (events, the context-items toggle, slash commands, interrupt and rewind markers).
+ * Consecutive ones stack tightly in one centered column.
  */
 export function isChipRow(row: ChatRow | undefined): boolean {
   if (!row) return false
@@ -107,7 +107,7 @@ export function isChipRow(row: ChatRow | undefined): boolean {
   }
 }
 
-/** Vertical padding of a row: 12px, or 2px towards a neighbouring chip row (4px between chips). */
+/** Vertical padding of a row: 12px, or 2px towards a neighboring chip row (4px between chips). */
 export function rowPadding(rows: readonly ChatRow[], i: number): string {
   const chip = isChipRow(rows[i])
   const top = chip && isChipRow(rows[i - 1]) ? 'pt-0.5' : 'pt-3'

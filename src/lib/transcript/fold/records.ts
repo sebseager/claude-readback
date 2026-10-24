@@ -219,7 +219,7 @@ const HIDDEN_LABELS: Record<string, string> = {
   model: 'Model identity',
   mcp_instructions_delta: 'MCP instructions changed',
   session_context: 'Session context (redacted)',
-  credential_org: 'Credential organisation',
+  credential_org: 'Credential organization',
   remote_session_change: 'Remote session info',
   auto_mode: 'Auto mode',
   agent_listing_delta: 'Agent types changed',

@@ -99,7 +99,7 @@ describe('TranscriptService', () => {
     await expect(svc.openSession(SYNTHETIC_SESSION_ID)).rejects.toThrow(/not stored/)
   })
 
-  it('reports unrecognised files and parse errors', async () => {
+  it('reports unrecognized files and parse errors', async () => {
     const res = await svc.ingest([{ name: 'notes.txt', text: 'hi' }, fixtures.edge])
     expect(res.errors.map((e) => [e.file, e.line])).toEqual([
       ['notes.txt', undefined],

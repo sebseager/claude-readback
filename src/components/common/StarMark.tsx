@@ -1,7 +1,7 @@
 import { cn } from '@/lib/utils'
 
 /**
- * Soft eight-pointed starburst in the accent colour. A generic geometric mark (not a
+ * Soft eight-pointed starburst in the accent color. A generic geometric mark (not a
  * trademarked logo): long and short rays alternate around a rounded hub.
  */
 export function StarMark({ className, title }: { className?: string; title?: string }) {

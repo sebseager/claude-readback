@@ -180,7 +180,7 @@ export function MessageList({
   )
 }
 
-/** On every search navigation: expand the containing card, scroll the row in, then centre the mark. */
+/** On every search navigation: expand the containing card, scroll the row in, then center the mark. */
 function useSearchJump(
   scrollToRow: (rowId: string, options?: { align?: ScrollAlign }) => boolean,
   indexById: Map<string, number>,
@@ -219,12 +219,12 @@ function useSearchJump(
     scrollToRow(row.id, { align: 'center' })
     let frame = 0
     let tries = 0
-    const centreMark = () => {
+    const centerMark = () => {
       const el = document.querySelector(`[data-row-id="${cssEscape(row.id)}"] [data-search-active]`)
       if (el) el.scrollIntoView({ block: 'center' })
-      else if (tries++ < 10) frame = requestAnimationFrame(centreMark)
+      else if (tries++ < 10) frame = requestAnimationFrame(centerMark)
     }
-    frame = requestAnimationFrame(centreMark)
+    frame = requestAnimationFrame(centerMark)
     return () => cancelAnimationFrame(frame)
   }, [activeMatch, indexById, rows, scrollToRow, session, ownFileKey])
 }

@@ -58,12 +58,12 @@ function subscribe(listener: () => void): () => void {
   return () => listeners.delete(listener)
 }
 
-let initialised = false
+let initialized = false
 /** Call once at startup: applies the theme and follows OS changes while on "system". */
 export function initTheme(): void {
   applyTheme()
-  if (initialised) return
-  initialised = true
+  if (initialized) return
+  initialized = true
   darkQuery()?.addEventListener('change', () => {
     if (preference === 'system') {
       applyTheme()

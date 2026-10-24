@@ -9,7 +9,7 @@ const usage = (o: Partial<Parameters<typeof estimateCostUsd>[1]> = {}) => ({
 })
 
 describe('pricing', () => {
-  it('normalises provider prefixes and context suffixes', () => {
+  it('normalizes provider prefixes and context suffixes', () => {
     expect(normalizeModelId('us.anthropic.claude-opus-5-5[1m]')).toBe('claude-opus-5-5')
     expect(normalizeModelId('claude-opus-4-5@20251101')).toBe('claude-opus-4-5')
   })

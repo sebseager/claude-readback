@@ -40,7 +40,7 @@ describe('store keys', () => {
   })
 })
 
-describe('key sanitising', () => {
+describe('key sanitizing', () => {
   it('never produces traversal segments', () => {
     for (const k of [
       mainKey('../../evil'),

@@ -15,7 +15,7 @@ export const UnknownBlock = memo(function UnknownBlock({ block }: { block: Unkno
     <div className="flex flex-col items-start gap-1.5" data-testid="unknown-block">
       <button type="button" aria-expanded={open} onClick={toggle} className={CHIP}>
         <Braces />
-        Unrecognised block <span className="font-mono text-[12px] text-fg-muted">{type}</span>
+        Unrecognized block <span className="font-mono text-[12px] text-fg-muted">{type}</span>
         <ChevronRight className={cn('transition-transform duration-150', open && 'rotate-90')} />
       </button>
       {open && (

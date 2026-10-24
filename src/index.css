@@ -110,7 +110,7 @@
   --color-danger: var(--danger);
   --color-success: var(--success);
 
-  /* shadcn semantic colours */
+  /* shadcn semantic colors */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -356,7 +356,7 @@
 }
 
 /* ------------------------------------------------------------------------------------------------
- * highlight.js theme mapped onto warm, muted token colours (light + dark).
+ * highlight.js theme mapped onto warm, muted token colors (light + dark).
  * --------------------------------------------------------------------------------------------- */
 :root {
   --hl-keyword: #a8482c;

@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils'
 import { useExpanded, useRevealWhenActive, useSearchQuery } from '../chatStore'
 import { Markdown } from '../Markdown'
 
-/** A labelled, collapsed-by-default markdown block (Agent prompt). */
+/** A labeled, collapsed-by-default markdown block (Agent prompt). */
 export const CollapsibleMarkdown = memo(function CollapsibleMarkdown({
   id,
   label,

@@ -14,7 +14,7 @@ export const HiddenContextToggle = memo(function HiddenContextToggle({ turn }: {
   const n = turn.hiddenContext.length
   return (
     <div className="flex flex-col gap-2" data-testid="hidden-context">
-      {/* Centred like the event chips around it (same column). */}
+      {/* Centered like the event chips around it (same column). */}
       <div className="flex justify-center">
         <button
           type="button"

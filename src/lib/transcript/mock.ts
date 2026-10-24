@@ -929,7 +929,7 @@ export function buildMockSession(): Session {
           'WebFetch',
           {
             url: 'https://example.com/blog/weather-caching',
-            prompt: 'Summarise the recommended TTLs and invalidation rules.',
+            prompt: 'Summarize the recommended TTLs and invalidation rules.',
           },
           'example.com/blog/weather-caching',
           at(5, 38),
@@ -1025,7 +1025,7 @@ export function buildMockSession(): Session {
           {
             description: 'Survey caching strategies',
             subagent_type: 'Explore',
-            prompt: 'Survey how popular weather apps cache forecasts. Summarise in under 200 words.',
+            prompt: 'Survey how popular weather apps cache forecasts. Summarize in under 200 words.',
           },
           'Survey caching strategies',
           at(7, 6),

@@ -56,7 +56,7 @@ export const PRICES: Record<string, ModelPrice> = {
 
 const KEYS = Object.keys(PRICES).sort((a, b) => b.length - a.length)
 
-/** Normalise provider prefixes and suffixes: `us.anthropic.claude-opus-5-5[1m]` → `claude-opus-5-5`. */
+/** Normalize provider prefixes and suffixes: `us.anthropic.claude-opus-5-5[1m]` → `claude-opus-5-5`. */
 export function normalizeModelId(model: string): string {
   let m = model.trim().toLowerCase()
   const at = m.indexOf('claude-')

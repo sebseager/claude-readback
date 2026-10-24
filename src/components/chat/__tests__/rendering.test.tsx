@@ -306,7 +306,7 @@ describe('Edit tool card', () => {
     expect(document.querySelectorAll('table').length).toBe(2)
   })
 
-  it('keeps the two-colour old/new diff in Input when there is no patch', () => {
+  it('keeps the two-color old/new diff in Input when there is no patch', () => {
     const noPatch: ToolBlock = { ...edit, id: 'toolu_edit_nopatch', result: undefined }
     renderInChat(<ToolCard block={noPatch} />, session)
     fireEvent.click(screen.getAllByRole('button', { expanded: false })[0])

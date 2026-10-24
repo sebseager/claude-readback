@@ -8,7 +8,7 @@ import { AttachmentChips } from './AttachmentChips'
 import { useActiveOccurrence, useExpanded, useSearchQuery } from './chatStore'
 import { RawJsonButton } from './RawJsonButton'
 
-/** Centred `/name args` chip, with the command's stdout expandable below. */
+/** Centered `/name args` chip, with the command's stdout expandable below. */
 export const SlashCommandRow = memo(function SlashCommandRow({ turn }: { turn: Turn }) {
   const cmd = turn.prompt?.command
   const query = useSearchQuery()
@@ -26,7 +26,7 @@ export const SlashCommandRow = memo(function SlashCommandRow({ turn }: { turn: T
           className="items-center"
         />
       )}
-      {/* pl-7 balances the raw-JSON button so the pill sits on the same centre line as event chips. */}
+      {/* pl-7 balances the raw-JSON button so the pill sits on the same center line as event chips. */}
       <div className="flex max-w-full items-center gap-1 pl-7">
         <button
           type="button"

@@ -49,7 +49,7 @@ export function toRows(hunks: Hunk[]): DiffRow[] {
   return rows
 }
 
-/** Old/new strings as a plain two-colour diff (Edit input). */
+/** Old/new strings as a plain two-color diff (Edit input). */
 export function stringsToHunk(oldString: string, newString: string): Hunk {
   const del = oldString === '' ? [] : oldString.split('\n').map((l) => `-${l}`)
   const add = newString === '' ? [] : newString.split('\n').map((l) => `+${l}`)

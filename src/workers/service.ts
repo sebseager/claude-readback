@@ -124,7 +124,7 @@ export class TranscriptService implements TranscriptApi {
 
     for (const { f, c } of classified) {
       if (c.role === 'unknown') {
-        result.errors.push({ file: f.name, message: c.reason ?? 'Unrecognised file' })
+        result.errors.push({ file: f.name, message: c.reason ?? 'Unrecognized file' })
         continue
       }
       if (c.role === 'subagent') {
@@ -398,7 +398,7 @@ export class TranscriptService implements TranscriptApi {
       return { fileName: `${base}.jsonl`, mime: 'application/x-ndjson', data: files[0].text, fileCount: 1 }
     const tree: Zippable = {}
     for (const f of files) {
-      // Keys are slugified at ingest; normalise again so no member can climb out of the archive root.
+      // Keys are slugified at ingest; normalize again so no member can climb out of the archive root.
       const name = safeRelativePath(f.name)
       if (name) tree[name] = strToU8(f.text)
     }

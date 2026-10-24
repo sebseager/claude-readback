@@ -66,7 +66,7 @@ export const tsMs = (iso: string | undefined): number | undefined => {
 }
 
 /**
- * Compact one-line JSON preview that never serialises more than ~`max` characters of a huge input
+ * Compact one-line JSON preview that never serializes more than ~`max` characters of a huge input
  * (Write content, base64…): long strings are cut before stringifying.
  */
 export const compactJson = (value: unknown, max = 80): string => {
@@ -104,7 +104,7 @@ export function safeId(id: string | undefined): string | undefined {
   return /^\.*$/.test(slug) ? undefined : slug
 }
 
-/** A relative path with `\` normalised to `/` and empty, `.` and `..` segments dropped. */
+/** A relative path with `\` normalized to `/` and empty, `.` and `..` segments dropped. */
 export function safeRelativePath(path: string): string {
   return path
     .replace(/\\/g, '/')

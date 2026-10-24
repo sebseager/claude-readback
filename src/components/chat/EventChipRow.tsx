@@ -15,7 +15,7 @@ const LEVEL_CLASS: Record<EventLevel, string> = {
   error: 'border-danger/35 bg-danger/8 text-danger',
 }
 
-/** Centred, muted pill for system events (turn duration, hooks, interrupts, errors…). */
+/** Centered, muted pill for system events (turn duration, hooks, interrupts, errors…). */
 export const EventChipRow = memo(function EventChipRow({ item }: { item: EventItem }) {
   const Icon = EVENT_ICONS[item.category] ?? EVENT_ICONS.other
   const query = useSearchQuery()

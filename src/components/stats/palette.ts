@@ -1,6 +1,6 @@
-// Series colours for the stats panel, derived from the design tokens (docs/DESIGN.md).
-// Emphasis scheme: terracotta (--accent) is the primary series; warm greys carry context. The greys sit below the
-// chroma floor on purpose (de-emphasis, not identity), so identity is never colour-alone: every chart has a legend
+// Series colors for the stats panel, derived from the design tokens (docs/DESIGN.md).
+// Emphasis scheme: terracotta (--accent) is the primary series; warm grays carry context. The grays sit below the
+// chroma floor on purpose (de-emphasis, not identity), so identity is never color-alone: every chart has a legend
 // with the value beside its swatch. Checked with the dataviz validator, adjacent pairs in stack order:
 //   light (#faf9f5): normal-vision ΔE ≥ 16.2, CVD ΔE ≥ 12.9   dark (#262624): normal ΔE ≥ 16.3, CVD ΔE ≥ 11.5
 // Sub-3:1 contrast on the lightest step is relieved by the per-type numbers next to the bar.

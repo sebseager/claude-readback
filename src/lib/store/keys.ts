@@ -5,7 +5,7 @@ import { safeId, safeRelativePath } from '../transcript/util'
 /** Session id used for meta files whose session is not known yet. */
 export const UNLINKED = ''
 
-/** Ids are normally slugified by classifyFile already; this is the last line of defence for keys. */
+/** Ids are normally slugified by classifyFile already; this is the last line of defense for keys. */
 const seg = (id: string) => safeId(id) ?? '_'
 
 export const mainKey = (sessionId: string) => seg(sessionId)

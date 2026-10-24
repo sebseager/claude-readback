@@ -171,7 +171,7 @@ describe('openSubagent', () => {
 
 describe('describeIngest', () => {
   const s = { sessionId: 'x' } as never
-  it('summarises an ingest', () => {
+  it('summarizes an ingest', () => {
     expect(describeIngest({ added: [s], updated: [], attached: 3 })).toBe(
       'Added 1 session · attached 3 subagents',
     )
