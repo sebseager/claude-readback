@@ -109,15 +109,29 @@ describe('tool card', () => {
     expect(header).toHaveAttribute('aria-expanded', 'false')
   })
 
-  it('expands errors by default and shows stderr with the exit code', () => {
+  it('previews the command under a collapsed Bash card and hides it when open', () => {
+    renderInChat(<ToolCard block={toolById('toolu_bash_1')} />, session)
+    const preview = screen.getByTestId('tool-preview')
+    expect(preview.textContent).toBe('$ pnpm vitest run src/api')
+    fireEvent.click(screen.getByRole('button', { name: /Bash/ }))
+    expect(screen.queryByTestId('tool-preview')).not.toBeInTheDocument()
+  })
+
+  it('keeps errors collapsed too, and shows stderr with the exit code once opened', () => {
     renderInChat(<ToolCard block={toolById('toolu_bash_2')} />, session)
-    expect(screen.getByRole('button', { name: /Bash/ })).toHaveAttribute('aria-expanded', 'true')
+    const header = screen.getByRole('button', { name: /Bash/ })
+    expect(header).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(header)
+    expect(header).toHaveAttribute('aria-expanded', 'true')
     expect(screen.getByText('exit 2')).toBeInTheDocument()
     expect(screen.getByText(/TS2322/)).toBeInTheDocument()
   })
 
-  it('expands denials by default with the reason', () => {
+  it('starts denials collapsed and shows the reason once opened', () => {
     renderInChat(<ToolCard block={toolById('toolu_bash_rm')} />, session)
+    const header = screen.getByRole('button', { name: /Bash/ })
+    expect(header).toHaveAttribute('aria-expanded', 'false')
+    fireEvent.click(header)
     expect(screen.getByText(/The user rejected this command/)).toBeInTheDocument()
     expect(screen.getAllByText('denied').length).toBeGreaterThan(0)
   })

@@ -23,8 +23,8 @@ type Props = {
 /** A tool call: one-line header (icon, name, summary, status, duration) expanding to Input + Result. */
 export const ToolCard = memo(function ToolCard({ block, fallbackLines }: Props) {
   const status = toolStatus(block)
-  const defaultOpen = status === 'error' || status === 'denied'
-  const [open, toggle] = useExpanded(block.id, defaultOpen)
+  // Every card starts collapsed, errors and denials included (they keep the red border), so a session scrolls fast.
+  const [open, toggle] = useExpanded(block.id)
   const query = useSearchQuery()
   const duration = elapsedMs(block.startedAt, block.endedAt)
   const inputActive = useToolInputActive(block)
@@ -38,6 +38,7 @@ export const ToolCard = memo(function ToolCard({ block, fallbackLines }: Props) 
     block.result.structured !== undefined
   const name = displayToolName(block.name)
   const rawLines = toolRawLines(block, fallbackLines)
+  const preview = open ? undefined : commandPreview(block)
   return (
     <div
       className={cn(
@@ -74,10 +75,35 @@ export const ToolCard = memo(function ToolCard({ block, fallbackLines }: Props) 
         </button>
         <RawJsonButton lines={rawLines} group="tool" title={`${block.name} tool call`} />
       </div>
+      {preview && (
+        <div
+          className="-mt-1 truncate px-3 pb-2 font-mono text-[12px] text-fg-muted"
+          data-testid="tool-preview"
+        >
+          <span className="select-none text-fg-muted/60">$ </span>
+          {highlightText(preview, query)}
+        </div>
+      )}
       {open && <ToolCardBodySlot block={block} skipInput={!!skipInput} />}
     </div>
   )
 })
+
+/**
+ * First line of a shell command (Bash and friends) for the collapsed card, so the header's description
+ * is backed by what actually ran. Undefined when the summary already is the command.
+ */
+function commandPreview(block: ToolBlock): string | undefined {
+  const input = block.input
+  if (!input || typeof input !== 'object') return undefined
+  const command = (input as Record<string, unknown>).command
+  if (typeof command !== 'string') return undefined
+  const lines = command.trim().split('\n')
+  const first = lines[0].trim()
+  if (!first) return undefined
+  const preview = lines.length > 1 ? `${first} …` : first
+  return preview === block.summary ? undefined : preview
+}
 
 /** Input + Result sections, loaded with the tool renderers' chunk (preloaded on app start). */
 function ToolCardBodySlot({ block, skipInput }: { block: ToolBlock; skipInput: boolean }) {
