@@ -1,0 +1,9 @@
+dist
+coverage
+node_modules
+pnpm-lock.yaml
+fixtures
+docs
+src/components/ui
+# verbatim copy of docs/types-contract.ts; remove this line once the contract diverges
+src/lib/transcript/types.ts

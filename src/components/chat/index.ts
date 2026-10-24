@@ -1,0 +1,55 @@
+// Chat rendering. See docs/DESIGN.md ("Message list", "Visual language").
+export { MessageList, type MessageListHandle, type MessageListProps, type ScrollAlign } from './MessageList'
+export { ChatContext, useChatContext, createRawLookup, type ChatContextValue } from './chatContext'
+export { ChatScrollContext, useChatScrollElement } from './scrollContext'
+export {
+  useChatStore,
+  useExpanded,
+  useHiddenContextShown,
+  useSearchQuery,
+  useActiveOccurrence,
+  type ChatState,
+  type ActiveMatch,
+  type SearchField,
+} from './chatStore'
+export { buildRows, estimateRowSize, type ChatRow, type RowKind, type RowModel } from './rows'
+export { computeSearchHits, useSearchNavigation, type SearchHit } from './search'
+export { RowRenderer } from './RowRenderer'
+export { UserPromptRow } from './UserPromptRow'
+export { QueuedUserRow } from './QueuedUserRow'
+export { UserBubble } from './UserBubble'
+export { AttachmentChips } from './AttachmentChips'
+export { PastedTextChip } from './PastedTextChip'
+export { ImageChip } from './ImageChip'
+export { MentionPill } from './MentionPill'
+export { SystemReminderChip } from './SystemReminderChip'
+export { SlashCommandRow } from './SlashCommandRow'
+export { TaskNotificationRow } from './TaskNotificationRow'
+export { AgentMessageRow } from './AgentMessageRow'
+export { CompactSummaryRow } from './CompactSummaryRow'
+export { MetaRow } from './MetaRow'
+export { SystemCard } from './SystemCard'
+export { AssistantRow } from './AssistantRow'
+export { AssistantFooter } from './AssistantFooter'
+export { BlockRenderer } from './BlockRenderer'
+export { ThinkingBlock } from './ThinkingBlock'
+export { TextBlock } from './TextBlock'
+export { FallbackBlock } from './FallbackBlock'
+export { UnknownBlock } from './UnknownBlock'
+export { Markdown } from './Markdown'
+export { CodeBlock } from './CodeBlock'
+export { EventChipRow } from './EventChipRow'
+export { CompactionRow } from './CompactionRow'
+export { AbandonedBranchRow } from './AbandonedBranchRow'
+export { HiddenContextToggle } from './HiddenContextToggle'
+export { InterruptedRow } from './InterruptedRow'
+export { RawJsonDialog } from './RawJsonDialog'
+export { RawJsonButton } from './RawJsonButton'
+export { TextViewerDialog } from './TextViewerDialog'
+export { ToolCard } from './tool/ToolCard'
+export { SubagentCard } from './tool/SubagentCard'
+export { TerminalPane } from './tool/TerminalPane'
+export { DiffView } from './tool/DiffView'
+export { CodeView } from './tool/CodeView'
+export { ClampedText } from './tool/ClampedText'
+export { QueuedBadge } from './QueuedBadge'

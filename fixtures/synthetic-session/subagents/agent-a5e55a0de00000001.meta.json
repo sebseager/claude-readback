@@ -1,0 +1,1 @@
+{"agentType": "general-purpose", "description": "Review word-count change", "toolUseId": "toolu_01SYNTH00000000015", "model": "opus", "spawnDepth": 1, "requestShape": "background", "requestNonInteractive": true}

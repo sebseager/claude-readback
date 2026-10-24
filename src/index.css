@@ -1,0 +1,464 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+@import 'shadcn/tailwind.css';
+@import '@fontsource-variable/inter';
+@import '@fontsource-variable/source-serif-4';
+@import '@fontsource-variable/source-serif-4/standard-italic.css';
+@import '@fontsource-variable/jetbrains-mono';
+
+@custom-variant dark (&:is(.dark *));
+
+/* ------------------------------------------------------------------------------------------------
+ * Design tokens (docs/DESIGN.md, "Visual language"). These are the source of truth; everything
+ * else (Tailwind utilities, shadcn variables) points at them.
+ * --------------------------------------------------------------------------------------------- */
+:root {
+  --bg-main: #faf9f5;
+  --bg-sidebar: #f0eee6;
+  --bg-bubble: #e8e6dc;
+  --bg-hover: rgba(20, 20, 19, 0.06);
+  --border: rgba(20, 20, 19, 0.12);
+  --fg: #141413;
+  --fg-secondary: #5e5d59;
+  --fg-muted: #87867f;
+  --accent: #d97757;
+  --accent-hover: #c9674a;
+  --accent-foreground: #ffffff;
+  --danger: #c2410c;
+  --success: #2f7d4f;
+
+  --radius: 0.625rem;
+
+  /* shadcn/ui variables mapped onto our tokens */
+  --background: var(--bg-main);
+  --foreground: var(--fg);
+  --card: var(--bg-main);
+  --card-foreground: var(--fg);
+  --popover: var(--bg-main);
+  --popover-foreground: var(--fg);
+  --primary: var(--accent);
+  --primary-foreground: var(--accent-foreground);
+  --secondary: var(--bg-bubble);
+  --secondary-foreground: var(--fg);
+  --muted: var(--bg-hover);
+  --muted-foreground: var(--fg-muted);
+  --destructive: var(--danger);
+  --input: var(--border);
+  --ring: var(--accent);
+  --chart-1: var(--accent);
+  --chart-2: #6a9bcc;
+  --chart-3: #788c5d;
+  --chart-4: #c2a35a;
+  --chart-5: #8e7cc3;
+  --sidebar: var(--bg-sidebar);
+  --sidebar-foreground: var(--fg);
+  --sidebar-primary: var(--accent);
+  --sidebar-primary-foreground: var(--accent-foreground);
+  --sidebar-accent: var(--bg-bubble);
+  --sidebar-accent-foreground: var(--fg);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--accent);
+
+  color-scheme: light;
+}
+
+.dark {
+  --bg-main: #262624;
+  --bg-sidebar: #1f1e1d;
+  --bg-bubble: #30302e;
+  --bg-hover: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.1);
+  --fg: #eeeeec;
+  --fg-secondary: #b0aea5;
+  --fg-muted: #8a8982;
+  --accent: #d97757;
+  --accent-hover: #e08a6e;
+  --accent-foreground: #ffffff;
+  --danger: #f87171;
+  --success: #7bc496;
+
+  --popover: #30302e;
+  --input: rgba(255, 255, 255, 0.14);
+
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------------------------------------
+ * Tailwind theme. `inline` so utilities resolve the variables at use site (needed for .dark).
+ * --------------------------------------------------------------------------------------------- */
+@theme inline {
+  /* Fonts */
+  --font-sans:
+    'Inter Variable', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial,
+    sans-serif;
+  --font-serif: 'Source Serif 4 Variable', ui-serif, Georgia, Cambria, 'Times New Roman', serif;
+  --font-mono: 'JetBrains Mono Variable', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  --font-heading: var(--font-serif);
+
+  /* App tokens: bg-main, bg-sidebar, bg-bubble, bg-hover, text-fg, text-fg-secondary, ... */
+  --color-main: var(--bg-main);
+  --color-sidebar: var(--bg-sidebar);
+  --color-bubble: var(--bg-bubble);
+  --color-hover: var(--bg-hover);
+  --color-border: var(--border);
+  --color-fg: var(--fg);
+  --color-fg-secondary: var(--fg-secondary);
+  --color-fg-muted: var(--fg-muted);
+  --color-accent: var(--accent);
+  --color-accent-hover: var(--accent-hover);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-danger: var(--danger);
+  --color-success: var(--success);
+
+  /* shadcn semantic colours */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-destructive: var(--destructive);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  /* Radius: 8px buttons/inputs (rounded-md), 12px cards/bubbles (rounded-xl), chips rounded-full */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 16px;
+  --radius-3xl: 20px;
+  --radius-4xl: 24px;
+
+  /* Layout */
+  --spacing-sidebar: 288px;
+  --spacing-rail: 56px;
+  --spacing-stats: 320px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    @apply font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    @apply bg-main text-fg;
+    font-size: 15px;
+    line-height: 1.6;
+    font-feature-settings: 'cv11', 'ss01';
+  }
+  ::selection {
+    background: color-mix(in srgb, var(--accent) 28%, transparent);
+  }
+  code,
+  kbd,
+  pre,
+  samp {
+    @apply font-mono;
+    font-variant-ligatures: none;
+  }
+}
+
+/* The chat body can opt into the serif reading font (Settings -> Chat font). */
+.font-chat-serif {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  line-height: 1.65;
+}
+.font-chat-serif :where(code, kbd, pre, samp) {
+  font-family: var(--font-mono);
+}
+
+/* Thin, quiet scrollbars like claude.ai */
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+}
+
+/* Code never uses programming ligatures (=> stays two characters, like claude.ai). */
+@theme inline {
+  --font-mono--font-feature-settings: 'liga' 0, 'calt' 0;
+}
+
+/* ------------------------------------------------------------------------------------------------
+ * Chat markdown (assistant text, thinking, handbacks). Scaled for a chat column, not a document.
+ * --------------------------------------------------------------------------------------------- */
+.markdown {
+  overflow-wrap: anywhere;
+  color: var(--fg);
+}
+.markdown > :first-child {
+  margin-top: 0;
+}
+.markdown > :last-child {
+  margin-bottom: 0;
+}
+/* Long unbroken tokens (hashes, URLs, base64) wrap inside prose instead of pushing the column wider.
+   Code blocks keep white-space: pre and scroll; table cells keep their natural width (break-word). */
+.markdown :where(p, li, blockquote, h1, h2, h3, h4, h5, h6, a, :not(pre) > code) {
+  overflow-wrap: anywhere;
+}
+.markdown :where(th, td) {
+  overflow-wrap: break-word;
+}
+
+.markdown :where(p, ul, ol, blockquote, .md-table-wrap) {
+  margin-block: 0.7em;
+}
+.markdown :where(h1, h2, h3, h4, h5, h6) {
+  margin-top: 1.3em;
+  margin-bottom: 0.45em;
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.005em;
+}
+.markdown h1 {
+  font-size: 1.3em;
+}
+.markdown h2 {
+  font-size: 1.17em;
+}
+.markdown h3 {
+  font-size: 1.05em;
+}
+.markdown :where(h4, h5, h6) {
+  font-size: 1em;
+}
+.markdown :where(ul, ol) {
+  padding-left: 1.5em;
+}
+.markdown ul {
+  list-style: disc;
+}
+.markdown ol {
+  list-style: decimal;
+}
+.markdown li {
+  margin-block: 0.25em;
+  padding-left: 0.15em;
+}
+.markdown li::marker {
+  color: var(--fg-muted);
+}
+.markdown :where(li > ul, li > ol) {
+  margin-block: 0.25em;
+}
+.markdown strong {
+  font-weight: 600;
+}
+.markdown a {
+  text-decoration: underline;
+  text-decoration-color: color-mix(in srgb, var(--fg) 30%, transparent);
+  text-underline-offset: 2px;
+}
+.markdown a:hover {
+  text-decoration-color: var(--fg);
+}
+.markdown blockquote {
+  border-left: 3px solid var(--border);
+  padding-left: 1em;
+  color: var(--fg-secondary);
+}
+.markdown hr {
+  margin-block: 1.4em;
+  border-top: 1px solid var(--border);
+}
+.markdown :not(pre) > code {
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: color-mix(in srgb, var(--bg-bubble) 70%, transparent);
+  padding: 0.08em 0.32em;
+  font-size: 0.86em;
+  overflow-wrap: anywhere;
+}
+.markdown .md-codeblock pre {
+  margin: 0;
+  overflow-x: auto;
+  padding: 12px 14px;
+  font-size: 13px;
+  line-height: 1.6;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+.markdown .md-codeblock pre code {
+  background: transparent;
+  padding: 0;
+  overflow-wrap: normal;
+}
+.markdown .md-table-wrap {
+  overflow-x: auto;
+}
+.markdown table {
+  border-collapse: collapse;
+  font-size: 0.93em;
+  min-width: 50%;
+}
+.markdown :where(th, td) {
+  border-bottom: 1px solid var(--border);
+  padding: 6px 14px 6px 0;
+  text-align: left;
+  vertical-align: top;
+}
+.markdown th {
+  font-weight: 600;
+  color: var(--fg);
+  border-bottom-color: color-mix(in srgb, var(--fg) 22%, transparent);
+}
+.markdown tr:last-child td {
+  border-bottom: none;
+}
+.markdown img {
+  max-width: 100%;
+  border-radius: 8px;
+}
+.markdown input[type='checkbox'] {
+  margin-right: 0.4em;
+  accent-color: var(--accent);
+}
+/* Thinking: quieter, smaller. */
+.markdown-quiet {
+  color: var(--fg-secondary);
+  font-size: 14px;
+  line-height: 1.6;
+}
+.markdown-quiet :where(strong, h1, h2, h3, h4, th) {
+  color: var(--fg-secondary);
+}
+
+/* ------------------------------------------------------------------------------------------------
+ * highlight.js theme mapped onto warm, muted token colours (light + dark).
+ * --------------------------------------------------------------------------------------------- */
+:root {
+  --hl-keyword: #a8482c;
+  --hl-string: #4f7a3b;
+  --hl-number: #976516;
+  --hl-comment: #8f8d85;
+  --hl-title: #39628f;
+  --hl-attr: #7c4f95;
+  --hl-meta: #6b6a64;
+  --hl-variable: #8a4b2e;
+}
+.dark {
+  --hl-keyword: #e59a7c;
+  --hl-string: #a3c98f;
+  --hl-number: #dcb46f;
+  --hl-comment: #85837c;
+  --hl-title: #93b7e2;
+  --hl-attr: #c7a6dc;
+  --hl-meta: #a3a198;
+  --hl-variable: #e8b394;
+}
+.hljs {
+  color: var(--fg);
+  background: transparent;
+}
+.hljs-comment,
+.hljs-quote {
+  color: var(--hl-comment);
+  font-style: italic;
+}
+.hljs-keyword,
+.hljs-selector-tag,
+.hljs-literal,
+.hljs-doctag,
+.hljs-section,
+.hljs-name {
+  color: var(--hl-keyword);
+}
+.hljs-string,
+.hljs-regexp,
+.hljs-symbol,
+.hljs-template-tag,
+.hljs-link {
+  color: var(--hl-string);
+}
+.hljs-number,
+.hljs-bullet {
+  color: var(--hl-number);
+}
+.hljs-title,
+.hljs-title.function_,
+.hljs-title.class_ {
+  color: var(--hl-title);
+}
+.hljs-attr,
+.hljs-attribute,
+.hljs-property,
+.hljs-selector-attr,
+.hljs-selector-class,
+.hljs-selector-id,
+.hljs-type,
+.hljs-built_in {
+  color: var(--hl-attr);
+}
+.hljs-variable,
+.hljs-template-variable,
+.hljs-params {
+  color: var(--hl-variable);
+}
+.hljs-meta,
+.hljs-meta .hljs-keyword,
+.hljs-subst,
+.hljs-punctuation {
+  color: var(--hl-meta);
+}
+.hljs-addition {
+  color: var(--success);
+  background: color-mix(in srgb, var(--success) 12%, transparent);
+}
+.hljs-deletion {
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 10%, transparent);
+}
+.md-codeblock :where(.hljs-addition, .hljs-deletion) {
+  display: inline-block;
+  min-width: 100%;
+}
+.hljs-emphasis {
+  font-style: italic;
+}
+.hljs-strong {
+  font-weight: 600;
+}
+
+/* Serif chat font applies to prose only; chips, cards, footers and controls stay in the UI sans.
+ * In the base layer so utilities such as font-mono still win. */
+@layer base {
+  .font-chat-serif
+    :where(button, input, time, section h4, [data-testid='assistant-footer'], [data-testid='event-chip']) {
+    font-family: var(--font-sans);
+  }
+  .font-chat-serif :where(button, [data-testid='assistant-footer']) :where(code, pre, .font-mono) {
+    font-family: var(--font-mono);
+  }
+}
