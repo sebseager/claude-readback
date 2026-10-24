@@ -181,6 +181,29 @@ describe('foldSession on the synthetic fixture', () => {
     expect(t?.checkpoint).toEqual({ fileCount: 0, recordLine: 10 })
   })
 
+  it('pulls pasted text out of slash command arguments', () => {
+    const rec = (uuid: string, parent: string | null, content: string) =>
+      JSON.stringify({
+        type: 'user',
+        uuid,
+        parentUuid: parent,
+        sessionId: 's1',
+        timestamp: '2026-01-01T00:00:00.000Z',
+        message: { role: 'user', content },
+      })
+    const args = 'now\n<pasted_content id="ab12">\nline one\nline two\n</pasted_content id="ab12">\nplease'
+    const text = `<command-name>/review</command-name>\n<command-message>review</command-message>\n<command-args>${args}</command-args>`
+    const session = foldSession(parse([rec('u1', null, text)].join('\n')))
+    const turn = session.turns[0]
+    expect(turn.kind).toBe('slash-command')
+    expect(turn.prompt?.command).toEqual({ name: '/review', args: 'now please', message: 'review' })
+    expect(turn.prompt?.segments).toEqual([
+      { kind: 'text', text: 'now\n' },
+      { kind: 'pasted', id: 'ab12', index: 1, lines: 1, text: 'line one\nline two' },
+      { kind: 'text', text: '\nplease' },
+    ])
+  })
+
   it('folds slash commands from user records and from system/local_command', () => {
     const model = s.turns.find((t) => t.prompt?.command?.name === '/model')
     expect(model?.kind).toBe('slash-command')

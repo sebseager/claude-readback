@@ -11,9 +11,18 @@ import {
   parseCommandOutput,
   parseCommandTags,
   parsePromptContent,
+  parsePromptText,
   parseTaskNotification,
 } from '../prompt'
-import type { CompactionItem, EventItem, EventLevel, RawRecord, Turn, UserPrompt } from '../types'
+import type {
+  CompactionItem,
+  EventItem,
+  EventLevel,
+  PromptSegment,
+  RawRecord,
+  Turn,
+  UserPrompt,
+} from '../types'
 import { arr, durationMs, get, isObj, num, obj, str } from '../util'
 import { type TurnBuilder, jsonDump, renderedText } from './builder'
 
@@ -121,7 +130,19 @@ function openSlashCommand(b: TurnBuilder, r: RawRecord, text: string, commandRun
   const name =
     parsed?.name || (str(get(commandRun, 'command')) ? `/${str(get(commandRun, 'command'))}` : '/?')
   const turn = b.openTurn('slash-command', r)
-  turn.prompt = basePrompt(r, text, { name, args: parsed?.args, message: parsed?.message })
+  // Text pasted after the command lands inside <command-args>; pull it out like a prompt's pastes.
+  let args = parsed?.args
+  let segments: PromptSegment[] = []
+  if (args?.includes('<pasted_content')) {
+    segments = parsePromptText(args, b.pastes)
+    args =
+      segments
+        .flatMap((s) => (s.kind === 'text' ? [s.text.trim()] : []))
+        .join(' ')
+        .trim() || undefined
+  }
+  turn.prompt = basePrompt(r, text, { name, args, message: parsed?.message })
+  turn.prompt.segments = segments
 }
 
 function attachCommandOutput(b: TurnBuilder, r: RawRecord, stdout: string) {

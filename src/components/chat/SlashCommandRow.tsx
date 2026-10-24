@@ -4,6 +4,7 @@ import { highlightText, splitActive } from '@/components/common/highlight'
 import { slashCommandParts } from '@/lib/transcript/searchText'
 import type { Turn } from '@/lib/transcript/types'
 import { cn } from '@/lib/utils'
+import { AttachmentChips } from './AttachmentChips'
 import { useActiveOccurrence, useExpanded, useSearchQuery } from './chatStore'
 import { RawJsonButton } from './RawJsonButton'
 
@@ -17,6 +18,14 @@ export const SlashCommandRow = memo(function SlashCommandRow({ turn }: { turn: T
   const [open, toggle] = useExpanded(turn.id, false)
   return (
     <div className="group/row flex flex-col items-center gap-2" data-testid="slash-command">
+      {turn.prompt && turn.prompt.segments.length > 0 && (
+        <AttachmentChips
+          segments={turn.prompt.segments}
+          mentions={[]}
+          rowId={turn.id}
+          className="items-center"
+        />
+      )}
       {/* pl-7 balances the raw-JSON button so the pill sits on the same centre line as event chips. */}
       <div className="flex max-w-full items-center gap-1 pl-7">
         <button
