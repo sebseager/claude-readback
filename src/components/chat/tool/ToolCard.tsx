@@ -100,14 +100,19 @@ export const ToolCard = memo(function ToolCard({ block, fallbackLines }: Props) 
   )
 })
 
-const firstLine = (text: string | undefined): string | undefined => {
-  if (!text) return undefined
-  const line = stripAnsi(text)
-    .split('\n')
-    .map((l) => l.trim())
-    .find((l) => l.length > 0)
-  return line && line.length > 240 ? `${line.slice(0, 240)} …` : line
-}
+const clip = (line: string | undefined) => (line && line.length > 240 ? `${line.slice(0, 240)} …` : line)
+
+const nonEmptyLines = (text: string | undefined): string[] =>
+  text
+    ? stripAnsi(text)
+        .split('\n')
+        .map((l) => l.trim())
+        .filter((l) => l.length > 0)
+    : []
+
+const firstLine = (text: string | undefined) => clip(nonEmptyLines(text)[0])
+/** Shell output ends with the summary ("error: …", "Tests 1 failed"), so the last line says the most. */
+const lastLine = (text: string | undefined) => clip(nonEmptyLines(text).at(-1))
 
 /** One line on why a failed call failed: the denial reason, else the first line of what the tool said. */
 function failurePreview(block: ToolBlock, status: ToolStatus): string | undefined {
@@ -117,7 +122,7 @@ function failurePreview(block: ToolBlock, status: ToolStatus): string | undefine
   if (status !== 'error') return undefined
   if (block.name === 'Bash') {
     const { stdout, stderr, exitCode } = bashOutput(r)
-    const line = firstLine(stderr) ?? firstLine(stdout)
+    const line = lastLine(stderr) ?? lastLine(stdout)
     if (line) return exitCode !== undefined ? `exit ${exitCode} · ${line}` : line
     if (exitCode !== undefined) return `exit ${exitCode}`
   }

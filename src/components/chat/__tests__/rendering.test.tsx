@@ -121,7 +121,9 @@ describe('tool card', () => {
     renderInChat(<ToolCard block={toolById('toolu_bash_2')} />, session)
     const header = screen.getByRole('button', { name: /Bash/ })
     expect(header).toHaveAttribute('aria-expanded', 'false')
-    expect(screen.getByTestId('tool-failure').textContent).toMatch(/^exit 2 · /)
+    expect(screen.getByTestId('tool-failure').textContent).toBe(
+      "exit 2 · src/config.ts(15,5): error TS2322: Type 'string | undefined' is not assignable to type 'number'.",
+    )
     fireEvent.click(header)
     expect(header).toHaveAttribute('aria-expanded', 'true')
     expect(screen.getByText('exit 2')).toBeInTheDocument()
