@@ -18,10 +18,9 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import type { SessionSummary } from '@/lib/transcript/types'
 import { cn } from '@/lib/utils'
-import { sessionSubtitle, titleSourceLabel } from './grouping'
+import { sessionSubtitle } from './grouping'
 
 type Props = {
   session: SessionSummary
@@ -50,26 +49,15 @@ export const SessionRow = memo(function SessionRow({
         active ? 'bg-bubble' : 'hover:bg-hover',
       )}
     >
-      <Tooltip>
-        <TooltipTrigger asChild>
-          <button
-            type="button"
-            onClick={() => onSelect(s.sessionId)}
-            aria-current={active ? 'true' : undefined}
-            className="min-w-0 flex-1 rounded-lg px-2.5 py-1.5 text-left outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
-          >
-            <div className="truncate text-sm leading-5 text-fg">{s.title}</div>
-            <div className="truncate text-xs leading-4 text-fg-muted">{sessionSubtitle(s)}</div>
-          </button>
-        </TooltipTrigger>
-        <TooltipContent side="right" align="start" className="max-w-80">
-          <p className="font-serif text-[13px] leading-snug whitespace-pre-wrap">{s.title}</p>
-          <p className="mt-1 opacity-70">
-            {titleSourceLabel(s.titleSource)}
-            {subagents > 0 && ` · ${subagents} subagent file${subagents === 1 ? '' : 's'}`}
-          </p>
-        </TooltipContent>
-      </Tooltip>
+      <button
+        type="button"
+        onClick={() => onSelect(s.sessionId)}
+        aria-current={active ? 'true' : undefined}
+        className="min-w-0 flex-1 rounded-lg px-2.5 py-1.5 text-left outline-none focus-visible:ring-2 focus-visible:ring-ring/50"
+      >
+        <div className="truncate text-sm leading-5 text-fg">{s.title}</div>
+        <div className="truncate text-xs leading-4 text-fg-muted">{sessionSubtitle(s)}</div>
+      </button>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button
